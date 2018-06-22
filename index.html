@@ -15,8 +15,9 @@
 	</body>
 
 	<template id="myRow">
-		${title ? `<h3 visible=${!!title}>${title}</h3>` : ''}
-		<div>${children}</div>
+		${props.title ? `<h3 visible=${!!props.title}>${props.title}</h3>` : ''}
+		<div>${state.number}</div>
+		${children ? `<div>${children}</div>` : ''}
 	</template>
 
 	<template id="myTable">
