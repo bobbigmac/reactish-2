@@ -17,6 +17,7 @@
 	<template id="myRow">
 		${props.title ? `<h3 visible=${!!props.title}>${props.title}</h3>` : ''}
 		<div>${state.number}</div>
+		${onClick ? `<button onClick=${onClick}>Click</button>`: ''}
 		${children ? `<div>${children}</div>` : ''}
 	</template>
 
