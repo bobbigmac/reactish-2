@@ -1,0 +1,31 @@
+<html>
+	<head>
+		<meta content="text/html;charset=utf-8" http-equiv="Content-Type">
+		<meta content="utf-8" http-equiv="encoding">
+
+		<script src="app-list.js" type="module"></script>
+		<script src="app-row.js" type="module"></script>
+
+		<script src="./temp.js" type="module"></script>
+	</head>
+
+	<body>
+		<div>Currently works in Chrome and Safari. Expected in Firefox 61 (or >=59 if you enable Custom Elements)</div>
+		<div>See app-row.js for component. See temp.module.js to see how data renders through template.</div>
+	</body>
+
+	<template id="myRow">
+		${title ? `<h3 visible=${!!title}>${title}</h3>` : ''}
+		<div>${children}</div>
+	</template>
+
+	<template id="myTable">
+		<app-list>
+			<h2>${title}</h2>
+			<div>${rows.length ? `${rows.length} rows` : `No rows  in ${rows}`}</div>
+			<div>${rows.map(rowData => `<app-row title="${rowData.title}">
+				<app-list>${rowData.text}</app-list>
+			</app-row>`)}</div>
+		</app-list>
+	</template>
+</html>
