@@ -16,4 +16,5 @@ It's a bit unpleasant atm, but may improve.
 
 ## TODO
 
+Needs event bindings. Maybe with [tagged templates](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_literals)
 Will be integrated with [reactish](https://github.com/bobbigmac/reactish)
