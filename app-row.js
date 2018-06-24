@@ -21,7 +21,8 @@ class AppRow extends HTMLElement {
 	}
 	connectedCallback() {
 	    this.innerHTML = this.render();
-	    setInterval(() => ++this.state.number && this.rerender(), 1000);
+	    //TODO: Remove this
+	    //setInterval(() => ++this.state.number && this.rerender(), 1000);
 	}
 	// disconnectedCallback() {}
 	attributeChangedCallback(attrName, oldVal, newVal) {
@@ -41,11 +42,13 @@ class AppRow extends HTMLElement {
 		const state = this.state;
 		const props = this.props;
 		
+		console.log('here');
 		return template.interpolate(Object.assign({ props }, { state }, {
 			children: this.childs,
 			//TODO: This (of course) doesn't bind, but renders as text
 			//TODO: Interpolate needs to be more complex to bind functions
-			onClick: this.increment
+			// onClick: "javascript:this.increment()"
+			onClick: "javascript:console.log(this)"
 		}));
 	}
 }

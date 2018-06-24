@@ -12,16 +12,21 @@ function unEntity(str){
 	Array.prototype.join = function(sep) { return join.call(this, sep || '') };
 })(Array.prototype.join);
 
-String.prototype.interpolate = function(params) {
-  const names = Object.keys(params);
-  const vals = Object.values(params);
-  const content = unEntity(this);
+window.convert = function(strings, ...params) {
+	console.log(strings, params);
+	return strings.map((str,pos) => str + (params[pos] || '')).join();
+}
 
-  //bleeecccchhhh
-  // console.log(content);
-  const f = new Function(...names, `return \`${content}\`;`)(...vals);
-  // console.log(f);
-  return f;
+String.prototype.interpolate = function(params) {
+	const names = Object.keys(params);
+	const vals = Object.values(params);
+	const content = unEntity(this);
+
+	//bleeecccchhhh
+	// console.log(content);
+	const f = new Function(...names, `return convert\`${content}\`;`)(...vals);
+	// console.log(f);
+	return f;
 }
 
 //TODO: How to rerun when data changes?
