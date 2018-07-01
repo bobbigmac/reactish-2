@@ -9,7 +9,9 @@ class AppList extends HTMLElement {
 		}
 	}
 	connectedCallback() {
+		console.log('App List connectedCallback');
 		var childNodes = this.childNodes;
+	    // this.innerHTML = "<b>I'm a custom element, app-list!: "+this.innerText+"</b>";
 	    // this.innerHTML = "<b>I'm a custom element, app-list!: "+this.innerText+"</b>";
 	}
 	disconnectedCallback() {}
@@ -19,7 +21,7 @@ class AppList extends HTMLElement {
 }
 
 if(window.customElements) {
-	// window.customElements.define('app-drawer', AppDrawer, {extends:'button'});
+	//console.log('Registering app-list');
 	window.customElements.define('app-list', AppList);
 } else {
 	console.error('No support for custom elements');
