@@ -10,6 +10,7 @@ Using custom element api
 Open [index.html](./index.html) in a web-browser (http protocol)
 
 See [app-list.js](./app-list.js) for simple component
+
 See [app-row.js](./app-row.js) for advanced component
 
 See [reactish.module.js](./temp.module.js) to see how data renders through template
