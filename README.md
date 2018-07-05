@@ -7,6 +7,8 @@ Using custom element api
 
 ## Running
 
+Clone the repo to your local webserver. 
+
 Open [index.html](./index.html) in a web-browser (http protocol)
 
 See [app-list.js](./app-list.js) for simple component
@@ -18,3 +20,7 @@ See [reactish.module.js](./reactish.module.js) to see how data renders through t
 Has event bindings somewhat similar to Blaze, bound via selectors after the template content has been rendered.
 - Upside: Event handlers are not defined inline
 - Downside: Event handlers are not defined inline
+
+## TODO
+
+- Setup a codepen
