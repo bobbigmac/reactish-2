@@ -1,20 +1,19 @@
-# Trying reactish again, but more so
+# React-like reactive custom elements
 
-Using custom element api (though not really necessary).
+Using custom element api
 
 - Currently works in Chrome and Safari. 
 	- Expected in Firefox 61 (or >=59 if you enable Custom Elements)
 
 ## Running
 
-Open [index.html](./index.html) in a web-browser (http protocol, firefox will if custom elements enabled, but chrome won't work in file protocol).
+Open [index.html](./index.html) in a web-browser (http protocol)
 
-See [app-row.js](./app-row.js) for component. 
-See [temp.module.js](./temp.module.js) to see how data renders through template.
+See [app-list.js](./app-list.js) for simple component
+See [app-row.js](./app-row.js) for advanced component
 
-It's a bit unpleasant atm, but may improve.
+See [reactish.module.js](./temp.module.js) to see how data renders through template
 
-## TODO
-
-Needs event bindings. Maybe with [tagged templates](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_literals)
-Will be integrated with [reactish](https://github.com/bobbigmac/reactish)
+Has event bindings somewhat similar to Blaze, bound via selectors after the template content has been rendered.
+- Upside: Event handlers are not defined inline
+- Downside: Event handlers are not defined inline

@@ -1,85 +1,80 @@
-// Renders from template #myRow with data context passed as props
+
+import reactish, { render } from './reactish.module.js';
 
 class AppRow extends HTMLElement {
 	constructor() {
 		super();
-		this.props = {};
-		this.state = {
-			hasState: true,
-			number: 0
+
+		var reactiveTrap = {
+			set: (target, key, value) => {
+				target[key] = value;
+				this.render(this.build());
+				return true;
+			}
 		};
-		//Render, and backup original children (not efficient, or responsive, gah)
+
+		const state = {
+			number: 0,
+			templateSelector: '#myRow',
+		};
+		
+		this.getAttributeNames().map(
+			attr => (state[attr] = this.getAttribute(attr))
+		);
+
+		// setInterval(() => this.increment(), 1000);
+
+		//Render, and store original children (not efficient, or responsive, but works)
 		this.childs = Array.prototype.map.call(
 			this.childNodes,
 			node =>
-				(node.render && node.render()) ||
-				node.textContent ||
-				node.innerText ||
-				""
+				(node.build && node.build()) ||
+				node.textContent || node.innerText || "" //A bit hacky
 		);
 
-		this.getAttributeNames().map(
-			x => (this.props[x] = this.getAttribute(x))
-		);
+		// Create a proxy to monitor changes to props
+		this.state = new Proxy(state, reactiveTrap);
 	}
 	connectedCallback() {
-		console.log('App-row connectedCallback')
-		//this.innerHTML = this.render();
-		const dom = this.render();
-		const element = this;
-		//Causes the customelements to be evaluated
-		const newElement = document.importNode(dom, true);
-		// element.parentNode.replaceChild(newElement, element);
-		const frag = document.createDocumentFragment()
-		Array.from(newElement.childNodes).map(x => frag.appendChild(x));
-		element.innerHTML = '';
-		element.appendChild(frag);
-		//TODO: Remove this
-		//setInterval(() => ++this.state.number && this.rerender(), 1000);
+		this.render(this.build());
 	}
-	// disconnectedCallback() {}
+	disconnectedCallback() {
+		console.log('Disconnected');
+	}
 	attributeChangedCallback(attrName, oldVal, newVal) {
 		console.log("attributeChangedCallback", attrName, oldVal, newVal);
 	}
 	increment() {
-		console.log("incrementing", this.number);
-		this.number++;
-		this.rerender();
-	}
-	rerender() {
-		//this.innerHTML = this.render();
+		console.log(`incrementing ${this.state.title} from ${this.state.number} to ${++this.state.number}`);
 	}
 	events() {
 		return {
 			'.clickable': {
-				'onClick': this.increment.bind(this)
+				'click': this.increment.bind(this)
 			}
 		}
 	}
-	render() {
-		const row = document.querySelector("#myRow");
-		const template = row.innerHTML;
+	build() {
 		const state = this.state;
-		const props = this.props;
+		const row = document.querySelector(state.templateSelector);
+		const template = row.innerHTML;
 
-		console.log("rendering app-row");
-		const dom = template.interpolate(
+		const dom = render.call(this, template,
 			Object.assign(
-				{ props },
 				{ state },
-				{
-					children: this.childs,
-					//TODO: This (of course) doesn't bind, but renders as text
-					//TODO: Interpolate needs to be more complex to bind functions
-					// onClick: "javascript:this.increment()"
-					//onClick: "javascript:console.log(this)"
-				}
+				{ children: this.childs }
 			),
 			this.events()
-		//TODO: There must be a better way to do this than innerHTML
-		)//.innerHTML;
-		console.log('dom in app-row', dom);
+		)
 		return dom;
+	}
+	render(dom) {
+		console.log('Rendering row', this.state.title, this.state.number);
+		Array.from(this.childNodes).map(x => this.removeChild(x));
+		//TODO: Could render to virtual-dom...
+		//			Would be able to diff new and 
+		//			existing childNodes to only apply changes
+		this.appendChild(dom);
 	}
 }
 

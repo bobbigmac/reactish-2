@@ -6,29 +6,28 @@
 		<script src="app-list.js" type="module"></script>
 		<script src="app-row.js" type="module"></script>
 
-		<script src="./temp.js" type="module"></script>
+		<link rel="stylesheet" type="text/css" href="style.css"> 
 	</head>
 
 	<body>
-		<div>Currently works in Chrome and Safari. Expected in Firefox 61 (or >=59 if you enable Custom Elements)</div>
-		<div>See app-row.js for component. See temp.module.js to see how data renders through template.</div>
-		<div class="app"></div>
+		<div class="app">
+			<app-list></app-list>
+		</div>
 	</body>
 
 	<template id="myRow">
-		${props.title ? `<h3 visible=${!!props.title}>${props.title}</h3>` : ''}
-		<div>${state.number}</div>
-		<button class="clickable">Click</button>
+		${state.title ? `<h3 visible=${!!state.title}>${state.title}</h3>` : ''}
 		${children ? `<div>${children}</div>` : ''}
+		<button class="clickable">Click ${state.number || '0'}</button>
 	</template>
 
 	<template id="myTable">
-		<app-list>
-			<h2>${title}</h2>
-			<div>${rows.length ? `${rows.length} rows` : `No rows  in ${rows}`}</div>
-			<div>${rows.map(rowData => `<app-row title="${rowData.title}">
+		<h2>${title}</h2>
+		<div>${rows.length ? `${rows.length} rows` : `No rows  in ${rows}`}</div>
+		<div>${rows.map(rowData => `
+			<app-row title="${rowData.title}">
 				${rowData.text}
-			</app-row>`)}</div>
-		</app-list>
+			</app-row>
+		`)}</div>
 	</template>
 </html>
